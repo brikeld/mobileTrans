@@ -1,0 +1,175 @@
+/* ========================================
+   PAGE STYLES - Shared across all pages
+   ======================================== */
+
+/* === GLOBAL STYLES === */
+@font-face {
+  font-family: 'ABCCameraPlain';
+  src: url('/typography/ABCCameraPlain-Medium-Trial.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+body {
+  font-family: 'ABCCameraPlain', sans-serif;
+  background: #0f9317;
+  margin: 0;
+  padding: 20px;
+  min-height: 100dvh;
+  box-sizing: border-box;
+}
+
+/* === MAIN WRAPPER === */
+.page-wrapper {
+  background: #cfcfcf;
+  border: 3px dotted #2c5fd3; 
+  /* 0f9317 */
+  /* 3554f7 */
+  
+  padding: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100dvh - 80px);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  grid-template-rows: auto 1fr;
+  position: relative;
+}
+
+/* === BACKGROUND IMAGE === */
+.background-image {
+  position: absolute;
+  left: 1%;
+  bottom: 1%;
+  height: calc(100% - 2%);
+  width: auto;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* === TITLE SECTION === */
+.title-section {
+  background: #2c5fd3;
+  margin-bottom: 0;
+  grid-column: 1 / 3;
+  grid-row: 1;
+  justify-self: end;
+  align-self: start;
+  display: inline-block;
+  max-width: calc(100% + 40px);
+  padding-bottom: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.main-title {
+  font-size: 5rem;
+  font-weight: 900;
+  margin: 0;
+  line-height: 1.2;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  display: block;
+}
+
+/* === CONTENT GRID === */
+.content-grid {
+  display: contents;
+}
+
+/* === LEFT COLUMN === */
+.left-column {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  align-self: end;
+  padding-right: 0;
+  margin-top:8.4%;
+  text-align: justify;
+  position: relative;
+  z-index: 1;
+}
+
+.section-text {
+  font-size: 2.8rem;
+  line-height: 1.3;
+  margin: 0;
+  color: #2c5fd3;
+  font-weight: 500;
+  background: white;
+  width: fit-content;
+  max-width: 100%;
+  line-height: 1;
+  padding-bottom: 2.4%;
+}
+
+/* === RIGHT COLUMN === */
+.right-column {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2%;
+  align-items: start;
+  margin-top: -10%;
+  position: relative;
+  z-index: 1;
+}
+
+.text-box-bordered {
+  border: 2px dotted #2c5fd3;;
+  background: #2c5fd3;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: white;
+  font-weight: 400;
+  padding-bottom: 8%;
+}
+
+.text-box-bordered.short {
+  align-self: start;
+}
+
+.text-box-bordered p {
+  margin: 0 0 12px 0;
+}
+
+.text-box-bordered p:last-child {
+  margin-bottom: 0;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .main-title {
+    font-size: 3rem;
+  }
+  
+  .section-heading {
+    font-size: 2rem;
+  }
+  
+  .section-text {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-wrapper {
+    padding: 00px;
+  }
+  
+  .right-column {
+    grid-template-columns: 1fr;
+  }
+  
+  .main-title {
+    font-size: 2rem;
+  }
+}
+

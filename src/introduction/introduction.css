@@ -1,0 +1,110 @@
+
+
+@font-face {
+  font-family: 'BianzhidaiRing';
+  src: url('/typography/bianzhidai_noBG-Ring.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ABCConnectFlatTrial';
+  src: url('/typography/ABCConnect-Flat-Trial.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Introduction-specific styles - scoped to introduction section */
+#introduction-section * {
+  box-sizing: border-box;
+}
+
+#introduction-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  background: #ffffff;
+  overflow: hidden;
+  z-index: 100;
+  /* Respect mobile safe areas */
+
+}
+
+.wrapper {
+  width: 100vw;
+  height: 100dvh;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.row {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.row-track {
+  display: inline-flex;
+  gap: 8px;
+  will-change: transform;
+}
+
+.token {
+  
+  font-size: .8em;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-radius: 0;
+  flex: 0 0 auto;
+}
+
+.token.brown {
+  background: #3554f7; 
+  color: #ffffff;
+  font-family: 'ABCConnectFlatTrial', sans-serif;
+}
+
+.token.blue {
+  background: #cfcfcf;
+  color: #ffffff;
+  font-family: 'ABCConnectFlatTrial', sans-serif;
+}
+
+/* Overload system overlay */
+#overload-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.overload-box {
+  background: #cfcfcf;
+  /* padding: 6px 12px; */
+  border-radius: 0;
+}
+
+.overload-text {
+  font-family: 'BianzhidaiRing', sans-serif;
+  letter-spacing: -0.05em;
+  line-height: .9;
+  font-size: 13vw;
+  color: #3554f7;
+  text-align: center;
+  white-space: nowrap;
+}
+
+
