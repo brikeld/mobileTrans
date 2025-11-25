@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Accordion Menu Example</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #cfcfcf;
+      padding: 20px;
+    }
+
+    .wrapper {
+      max-width: 768px;
+      margin: 0 auto;
+      border: 1px solid #ddd;
+      background: #fff;
+    }
+
+    .accordion-item {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .accordion-header {
+      padding: 24px 20px;
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+  
+
+    .accordion-content {
+      padding: 0 20px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-inner {
+      padding: 24px 0 32px;
+      font-size: 26px;
+      line-height: 1.35;
+    }
+
+    /* HEALTH: white background, blue text for both title and content */
+    .accordion-item.health .accordion-header {
+      background: #ffffff;
+      color: #3554f7;
+    }
+
+    .accordion-item.health .accordion-content {
+      background: #ffffff;
+      color: #3554f7;
+    }
+
+    /* SIDE EFFECTS: blue background, white text for both title and content */
+    .accordion-item.side-effects .accordion-header,
+    .accordion-item.side-effects .accordion-content {
+      background: #3554f7;
+      color: #ffffff;
+    }
+
+    /* ADVICES: grey background, white text for both title and content */
+    .accordion-item.advices .accordion-header,
+    .accordion-item.advices .accordion-content {
+      background: #cfcfcf;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- HEALTH -->
+    <section class="accordion-item health">
+      <div class="accordion-header">Health</div>
+      <div class="accordion-content">
+        <div class="accordion-inner">
+          Health isn’t just the absence of illness, it’s the balance of body,
+          mind, and environment. Building small daily habits—sleep, movement,
+          and connection—creates resilience long before symptoms appear.
+        </div>
+      </div>
+    </section>
+
+    <!-- SIDE EFFECTS -->
+    <section class="accordion-item side-effects">
+      <div class="accordion-header">Side effects</div>
+      <div class="accordion-content">
+        <div class="accordion-inner">
+          Pushing productivity without limits has side effects: chronic stress,
+          emotional exhaustion, weaker relationships, and difficulty switching
+          off. Noticing these signals early is the first step to changing pace.
+        </div>
+      </div>
+    </section>
+
+    <!-- ADVICES  -->
+    <section class="accordion-item advices">
+      <div class="accordion-header">Advices</div>
+      <div class="accordion-content">
+        <div class="accordion-inner">
+          “We live in a culture where doing more has become the default, and
+          slowing down feels like a failure. But constant productivity comes
+          with a cost—one we rarely see until it’s too late. Stress builds
+          quietly, sleep shrinks, relationships fade, and the line between work
+          and life dissolves. This space explores what happens when the push to
+          perform becomes too much, how it impacts our minds, bodies, and the
+          people around us, and why finding balance isn’t a luxury—it’s
+          survival.”
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const headers = document.querySelectorAll('.accordion-header');
+
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+
+        // toggle "active" class for slight visual feedback
+        header.classList.toggle('active');
+
+        if (!content.style.maxHeight || content.style.maxHeight === '0px') {
+          content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+          content.style.maxHeight = '0px';
+        }
+      });
+    });
+
+    // Open "Advices" by default
+    window.addEventListener('load', () => {
+      const advicesHeader = document.querySelectorAll('.accordion-header')[2];
+      const advicesContent = advicesHeader.nextElementSibling;
+
+      advicesHeader.classList.add('active');
+      advicesContent.style.maxHeight = advicesContent.scrollHeight + 'px';
+    });
+  </script>
+</body>
+</html>

@@ -47,13 +47,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0.200rem dotted #3554f7;
-  background-color: #cfcfcf;
-  background-image: var(--hover-image);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  --hover-image: url('/public/images/E.png');
+  border: 0.1000rem solid #3554f7;
+  background-color: #3554f7;
   font-weight: 600;
   text-align: center;
   cursor: pointer;
@@ -64,7 +59,7 @@ body {
   overflow: hidden;
   transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   transform-origin: center;
-  color: #3554f7;
+  color: #ffffff;
 }
 
 .text-box .inner {
@@ -92,17 +87,15 @@ body {
   font-size: 1.2rem;
 }
 
-/* Visited state (green background with Advice text) - non-interactive for all boxes */
+/* Visited state (white background with blue Advice text) - non-interactive for all boxes */
 .text-box.visited {
-  background-color: #3554f7 !important; 
-  border-color: #3554f7 !important;
+  background-color: #ffffff !important; 
   cursor: default !important;
   pointer-events: none;
-  background-image: none !important;
 }
 
 .text-box.visited span {
-  color: white !important;
+  color: #0f9317 !important;
   font-family: 'ABCConnect', sans-serif;
 }
 

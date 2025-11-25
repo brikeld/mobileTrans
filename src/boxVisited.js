@@ -2,6 +2,20 @@
 
 import { scaleTextToFit } from './textScaling.js';
 
+// Map each box number to its specific advice text
+const adviceTexts = {
+  1: "Take one slow breath.",
+  3: "Choose rest tonight.",
+  4: "End your day earlier.",
+  5: "Protect one silent hour.",
+  8: "Do something just fun.",
+  9: "Eat one real meal.",
+  12: "Give undivided minutes today.",
+  13: "Reach out once today.",
+  14: "Be here a moment.",
+  15: "Do one tiny thing."
+};
+
 function getBoxNumber(box) {
   // Extract box number from class name (e.g., "box-1" -> 1, "box-3" -> 3)
   const classList = Array.from(box.classList);
@@ -26,7 +40,8 @@ export function setupBoxVisited(box) {
     box.classList.add('visited');
     const span = box.querySelector('span');
     if (span) {
-      span.textContent = `Advice${boxNumber}`;
+      // Use the specific advice text for this box, or fallback if not found
+      span.textContent = adviceTexts[boxNumber] || `Advice${boxNumber}`;
 
       // Scale Advice text to fit the current box size
       const scaleText = () => {
