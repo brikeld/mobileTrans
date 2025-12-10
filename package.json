@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:lan": "vite --host 0.0.0.0 --port 5173",
+    "network": "node ./scripts/show-url.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },
