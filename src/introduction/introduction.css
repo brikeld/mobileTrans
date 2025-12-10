@@ -1,8 +1,8 @@
 
 
 @font-face {
-  font-family: 'BianzhidaiRing';
-  src: url('/typography/bianzhidai_noBG-Ring.woff2') format('woff2');
+  font-family: 'ABCCameraPlain';
+  src: url('/typography/ABCCameraPlain-Medium-Trial.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
@@ -98,7 +98,7 @@
 }
 
 .overload-text {
-  font-family: 'BianzhidaiRing', sans-serif;
+  font-family: 'ABCCameraPlain', sans-serif;
   letter-spacing: -0.05em;
   line-height: .9;
   font-size: 13vw;

@@ -95,8 +95,10 @@ body {
 }
 
 .text-box.visited span {
-  color: #0f9317 !important;
-  font-family: 'ABCConnect', sans-serif;
+  color: #3554f7 !important;
+  font-family: 'ABCCameraPlain', sans-serif;
+  text-transform: uppercase;
+  font-size: 90% !important;
 }
 
 /* Box 3 - Wide top-right box */
