@@ -13,7 +13,7 @@
 }
 body {
   font-family: 'ABCCameraPlain', sans-serif;
-  background: #cfcfcf;
+  background: #dbdbdb;
   margin: 0;
   height: 100dvh;
 }
@@ -38,9 +38,11 @@ body {
   gap: 20px;
   padding: 20px;
   min-height: 100dvh;
+  height: 100dvh;
+  max-height: 100dvh;
   width: 100vw;
-  height: auto;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .text-box {
@@ -75,6 +77,8 @@ body {
   font-size: 1.3rem;
   white-space: normal;
   word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
   max-width: 100%;
 }
 
@@ -87,9 +91,9 @@ body {
   font-size: 1.2rem;
 }
 
-/* Visited state (white background with blue Advice text) - non-interactive for all boxes */
+/* Visited state (grey background with blue Advice text) - non-interactive for all boxes */
 .text-box.visited {
-  background-color: #ffffff !important; 
+  background-color: #dbdbdb !important; 
   cursor: default !important;
   pointer-events: none;
 }
@@ -98,7 +102,10 @@ body {
   color: #3554f7 !important;
   font-family: 'ABCCameraPlain', sans-serif;
   text-transform: uppercase;
-  font-size: 90% !important;
+  font-size: inherit;
+  letter-spacing: -0.05em;
+  line-height: .9!important;
+  hyphens: none;
 }
 
 /* Box 3 - Wide top-right box */
@@ -112,7 +119,7 @@ body {
 
 /* Box 4 - Row 2–3, left */
 .box-4 {
-  grid-column: 1 / 5;
+  grid-column: 1 / 8;
   grid-row: 3 / 5;
 }
 .box-4 span {
@@ -121,7 +128,7 @@ body {
 
 /* Box 5 - Row 2–3, middle */
 .box-5 {
-  grid-column: 5 / 9;
+  grid-column: 8 / 13;
   grid-row: 3 / 5;
 }
 .box-5 span {
@@ -146,7 +153,7 @@ body {
 
 /* Box 9 - Row 3–4, left/mid wide */
 .box-9 {
-  grid-column: 1 / 7;
+  grid-column: 1 / 9;
   grid-row: 5 / 7;
 }
 .box-9 span {
@@ -155,7 +162,7 @@ body {
 
 /* Box 12 - Row 3–4, right wide */
 .box-12 {
-  grid-column: 7 / 13;
+  grid-column: 9 / 13;
   grid-row: 5 / 7;
 }
 .box-12 span {
@@ -168,26 +175,14 @@ body {
   grid-row: 7 / 9;
 }
 .box-13 span {
-  font-size: 0.9rem;
+  font-size: 0.75rem;
 }
 
 /* Box 14 - Bottom band, middle */
 .box-14 {
-  grid-column: 5 / 9;
+  grid-column: 5 / 13;
   grid-row: 7 / 9;
 }
 .box-14 span {
   font-size: 1rem;
 }
-
-/* Box 15 - Bottom band, right */
-.box-15 {
-  grid-column: 9 / 13;
-  grid-row: 7 / 9;
-}
-.box-15 span {
-  font-size: 1rem;
-}
-
-
-

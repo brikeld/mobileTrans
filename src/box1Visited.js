@@ -15,14 +15,16 @@ export function setupBox1Visited(box1) {
       
       // Scale text to fill the box as much as possible
       const scaleText = () => {
-        scaleTextToFit(span, box1, { minFontSize: 20 });
+        scaleTextToFit(span, box1, { minFontSize: 18, padding: 16, maxIterations: 60 });
       };
       
+      // Make text large immediately, then refine once layout settles
+      scaleText();
       // Initial scale after layout is ready
       requestAnimationFrame(() => {
         setTimeout(() => {
           scaleText();
-        }, 100);
+        }, 80);
       });
       
       // Continuously watch for box size changes and rescale

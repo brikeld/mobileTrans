@@ -27,7 +27,16 @@ export function setupBoxClickHandlers(textBoxes) {
     if (visited === 'true') return;
     
     box.addEventListener('click', () => {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/9b8b9d03-a71c-482b-80a1-522ea625e906',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:'debug-session',runId:'post-fix2',hypothesisId:'H3',location:'boxClickHandlers.js:click',message:'box click',data:{boxNumber,visitedBefore:visited},timestamp:Date.now()})}).catch(()=>{});
+      // #endregion
       const span = box.querySelector('span');
+
+      // Flag animation in progress so resize-driven scaling can be deferred
+      box.dataset.animating = 'true';
+      if (span) {
+        span.style.opacity = '0';
+      }
 
       // Mark box as visited in this session
       sessionStorage.setItem(storageKey, 'true');
@@ -37,16 +46,16 @@ export function setupBoxClickHandlers(textBoxes) {
 
       // First, gently shrink and fade out the current text
       tl.to(box, {
-        scale: 0.96,
-        duration: 0.15,
-        ease: 'power1.in'
+        scale: 0.97,
+        duration: 0.2,
+        ease: 'power2.inOut'
       }, 0);
 
       if (span) {
         tl.to(span, {
           opacity: 0,
-          duration: 0.15,
-          ease: 'power1.in'
+          duration: 0.18,
+          ease: 'power2.inOut'
         }, 0);
       }
 
@@ -54,19 +63,30 @@ export function setupBoxClickHandlers(textBoxes) {
       tl.add(() => {
         setupBoxVisited(box);          // adds .visited and sets AdviceN text
         box.style.backgroundImage = 'none'; // ensure image disappears immediately
+        // #region agent log
+        fetch('http://127.0.0.1:7243/ingest/9b8b9d03-a71c-482b-80a1-522ea625e906',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:'debug-session',runId:'post-fix2',hypothesisId:'H3',location:'boxClickHandlers.js:post-visited',message:'visited applied',data:{boxNumber,fontSize:span?parseFloat(window.getComputedStyle(span).fontSize):null},timestamp:Date.now()})}).catch(()=>{});
+        // #endregion
+      });
+
+      tl.eventCallback('onComplete', () => {
+        // #region agent log
+        fetch('http://127.0.0.1:7243/ingest/9b8b9d03-a71c-482b-80a1-522ea625e906',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:'debug-session',runId:'post-fix2',hypothesisId:'H5',location:'boxClickHandlers.js:timelineComplete',message:'timeline complete',data:{boxNumber,fontSize:span?parseFloat(window.getComputedStyle(span).fontSize):null,opacity:span?parseFloat(window.getComputedStyle(span).opacity):null},timestamp:Date.now()})}).catch(()=>{});
+        // #endregion
+        box.dataset.animating = 'false';
+        box.dispatchEvent(new CustomEvent('boxAnimationComplete'));
       });
 
       // Then grow and fade in the new Advice text
       tl.to(box, {
-        scale: 1.03,
-        duration: 0.25,
+        scale: 1,
+        duration: 0.35,
         ease: 'power2.out'
       });
 
       if (span) {
         tl.to(span, {
           opacity: 1,
-          duration: 0.25,
+          duration: 0.35,
           ease: 'power2.out'
         }, '<');
       }

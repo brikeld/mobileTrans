@@ -27,7 +27,11 @@ function assignHoverImages(textBoxes) {
 }
 
 // Function to initialize main content
+let mainInitialized = false;
+
 function initMainContent() {
+  if (mainInitialized) return;
+  mainInitialized = true;
   const container = document.getElementById('container');
   const gridWrapper = document.querySelector('.grid-wrapper');
   const textBoxes = document.querySelectorAll('.text-box');

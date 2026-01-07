@@ -1,5 +1,3 @@
-
-
 @font-face {
   font-family: 'ABCCameraPlain';
   src: url('/typography/ABCCameraPlain-Medium-Trial.woff2') format('woff2');
@@ -66,14 +64,16 @@
 
 .token.brown {
   background: #3554f7; 
-  color: #ffffff;
+  color: #dbdbdb;
   font-family: 'ABCConnectFlatTrial', sans-serif;
+
 }
 
 .token.blue {
-  background: #cfcfcf;
-  color: #ffffff;
+  background: #dbdbdb;
+  color: #3554f7;
   font-family: 'ABCConnectFlatTrial', sans-serif;
+  
 }
 
 /* Overload system overlay */
@@ -92,19 +92,18 @@
 }
 
 .overload-box {
-  background: #cfcfcf;
-  /* padding: 6px 12px; */
+  background: #dbdbdb;
+  padding: 10px 0px;
+  width: 100%;
   border-radius: 0;
 }
 
 .overload-text {
   font-family: 'ABCCameraPlain', sans-serif;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.03em;
   line-height: .9;
-  font-size: 13vw;
+  font-size: 15.5vw;
   color: #3554f7;
   text-align: center;
   white-space: nowrap;
 }
-
-

@@ -1,4 +1,5 @@
 import os from 'os';
+import qrcode from 'qrcode-terminal';
 
 const interfaces = os.networkInterfaces();
 
@@ -17,8 +18,19 @@ if (!lanIp) {
   console.log('Could not determine local network IP.');
 } else {
   const port = process.env.PORT || 5173;
-  console.log(`Network link: http://${lanIp}:${port}`);
+  const url = `http://${lanIp}:${port}`;
+  console.log(`\nNetwork link: ${url}\n`);
+  console.log('Scan this QR code with your phone:');
+  qrcode.generate(url, { small: true });
+  console.log('');
 }
+
+
+
+
+
+
+
 
 
 

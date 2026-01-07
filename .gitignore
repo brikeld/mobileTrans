@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.webp
+*.bmp
+*.ico
+*.tiff
+*.tif
+*.heic
+*.heif
+
+# Video files
+*.mp4
+*.mov
+*.avi
+*.webm
+*.mkv
+*.flv
+*.wmv
+*.m4v
+*.3gp
+*.ogv
+
+# Directories containing images/videos (optional - uncomment if you want to ignore entire directories)
+# public/grandient/
+# public/video/
+

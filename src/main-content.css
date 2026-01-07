@@ -1,8 +1,8 @@
 /* Main textual content styles */
 :root {
   --content-blue: #3554f7;
-  --content-grey: #cfcfcf;
-  --content-text-grey: #ffffff;
+  --content-grey: #dbdbdb;
+  --content-text-grey: #dbdbdb;
 }
 
 .content-section {
@@ -17,7 +17,8 @@
   color: var(--content-blue);
   font-size: 4rem!important;
   font-weight: 600;
-  letter-spacing: 0em;
+  letter-spacing: -4px;
+  padding: 0.5rem 0;
   margin: 0.1rem 0 0.1rem;
   line-height: 1;
 }
@@ -26,41 +27,57 @@
   padding: .75rem 1rem;
   background: var(--content-blue);
   color: var(--content-text-grey);
-  font-size: 2rem;
+  font-size: 1.8rem;
+  padding: 1rem 1rem;
+  letter-spacing: -0.03em;
   line-height: 1;
   font-weight: 100!important;
   text-align: left;
   margin: 0;
+    hyphens: auto;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .content-text {
-  
   padding: 0rem 1rem;
   background: var(--content-grey);
   color: var(--content-blue);
   font-size: 1.1rem;
+  letter-spacing: -0.03em;
   line-height: 1;
   text-align: left;
+  hyphens: auto;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .content-submenu {
   display: flex;
   flex-direction: column;
-  background: var(--content-grey);
+  
 }
 
 .submenu-item {
+  min-height: calc(7rem + 1.5rem + 1.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  font-size: 2rem;
+  font-size: 4rem;
   font-weight: 100!important;
-  color: var(--content-blue);
-  background: var(--content-grey);
-  border-bottom: 1px solid var(--content-blue);
+  letter-spacing: -0.05em;
+  line-height: 3.5rem;
+  text-transform: uppercase;
+  color: var(--content-grey);
+  background: var(--content-blue);
+  margin: 0;
 }
 
-.submenu-item:first-child {
-  border-top: 1px solid var(--content-blue);
+.content-submenu:nth-of-type(2) .submenu-item {
+  min-height: calc(3.5rem + 3rem + 3rem);
 }
+
 
 .content-title-left {
   text-align: left;
@@ -68,10 +85,11 @@
   color: var(--content-text-grey);
   padding: 0.5rem 1rem;
   margin: 0;
-  line-height: 1;
-  font-size: 3.5rem!important;
+  font-size: 4rem!important;
   font-weight: 400!important;
-  letter-spacing: 0em!important;
+  letter-spacing: -0.035em;
+  line-height: .93;
+
 }
 
 .content-image {

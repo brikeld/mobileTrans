@@ -4,121 +4,113 @@ import gsap from 'gsap';
 
 export function scaleTextToFit(span, box, options = {}) {
   const {
-    minFontSize = 20,
-    padding = 40,
-    maxIterations = 30
+    minFontSize = 18,
+    padding = 16,
+    maxIterations = 50,
+    apply = true,
+    lineHeight = 1.05,
+    debugReason = 'unknown'
   } = options;
-  
-  const boxWidth = box.clientWidth - padding;
-  const boxHeight = box.clientHeight - padding;
-  
-  if (boxWidth <= 0 || boxHeight <= 0) return;
-  
-  span.style.maxWidth = boxWidth + 'px';
-  
-  // Start with a large font size and reduce until it fits
-  let fontSize = Math.min(boxWidth, boxHeight) * 0.8;
-  span.style.fontSize = fontSize + 'px';
-  
-  // Binary search for optimal size
-  let minSize = minFontSize;
-  let maxSize = fontSize * 2;
-  let iterations = 0;
-  
-  while (iterations < maxIterations) {
-    const fitsWidth = span.scrollWidth <= boxWidth;
-    const fitsHeight = span.scrollHeight <= boxHeight;
-    
-    if (fitsWidth && fitsHeight) {
-      // Text fits, try to make it bigger
-      minSize = fontSize;
-      fontSize = (fontSize + maxSize) / 2;
-    } else {
-      // Text doesn't fit, make it smaller
-      maxSize = fontSize;
-      fontSize = (minSize + fontSize) / 2;
-    }
-    
-    // Ensure fontSize never goes below minimum
-    fontSize = Math.max(fontSize, minFontSize);
-    span.style.fontSize = fontSize + 'px';
-    iterations++;
-    
-    // Stop if we're close enough
-    if (Math.abs(maxSize - minSize) < 0.5) break;
-  }
-  
-  // Final check: ensure we never go below minimum
-  const finalFontSize = parseFloat(span.style.fontSize);
-  if (finalFontSize < minFontSize) {
-    span.style.fontSize = minFontSize + 'px';
-  }
-}
 
-export function scaleTextAfterGridAnimation(span, box, originalFontSize, originalBoxWidth, originalBoxHeight) {
-  const newBoxWidth = box.clientWidth;
-  const newBoxHeight = box.clientHeight;
-  const containerWidth = newBoxWidth - 40;
-  const containerHeight = newBoxHeight - 40;
-  
-  // Calculate size ratio to determine starting font size
-  const widthRatio = newBoxWidth / originalBoxWidth;
-  const heightRatio = newBoxHeight / originalBoxHeight;
-  const sizeRatio = Math.min(widthRatio, heightRatio);
-  
-  span.style.maxWidth = containerWidth + 'px';
-  
-  // Start with a font size proportional to how much bigger the box got
-  let optimalSize = originalFontSize * sizeRatio * 2.5;
-  
-  // Binary search approach: increase if too small, decrease if too big
-  let minSize = originalFontSize;
-  let maxSize = optimalSize * 3;
+  if (!span || !box) return;
+
+  const availableWidth = Math.max(0, box.clientWidth - padding);
+  const availableHeight = Math.max(0, box.clientHeight - padding);
+
+  if (availableWidth === 0 || availableHeight === 0) return;
+
+  const previousFontSize = span.style.fontSize;
+  const previousLineHeight = span.style.lineHeight;
+
+  // Keep text wrapping only at natural word boundaries to avoid single-letter lines
+  span.style.whiteSpace = 'normal';
+  span.style.wordBreak = 'keep-all';
+  span.style.overflowWrap = 'normal';
+  span.style.hyphens = 'none';
+  span.style.textAlign = 'center';
+  span.style.maxWidth = `${availableWidth}px`;
+  span.style.lineHeight = `${lineHeight}`;
+
+  const currentComputedSize = parseFloat(window.getComputedStyle(span).fontSize) || minFontSize;
+  let low = minFontSize;
+  // Allow plenty of headroom so short texts can get large
+  let high = Math.max(currentComputedSize, Math.min(availableWidth, availableHeight) * 1.9);
+  if (high < low) high = low;
+
+  let bestFit = low;
   let iterations = 0;
-  const maxIterations = 20;
-  
-  // Temporarily set font size to calculate optimal size (hidden from view)
-  const tempFontSize = span.style.fontSize;
-  span.style.visibility = 'hidden';
-  span.style.fontSize = optimalSize + 'px';
-  
-  while (iterations < maxIterations) {
-    const fitsWidth = span.scrollWidth <= containerWidth;
-    const fitsHeight = span.scrollHeight <= containerHeight;
-    
+
+  while (iterations < maxIterations && high - low > 0.5) {
+    const mid = (low + high) / 2;
+    span.style.fontSize = `${mid}px`;
+
+    const fitsWidth = span.scrollWidth <= availableWidth;
+    const fitsHeight = span.scrollHeight <= availableHeight;
+
     if (fitsWidth && fitsHeight) {
-      // Text fits, try to make it bigger
-      minSize = optimalSize;
-      optimalSize = (optimalSize + maxSize) / 2;
+      bestFit = mid;
+      low = mid;
     } else {
-      // Text doesn't fit, make it smaller
-      maxSize = optimalSize;
-      optimalSize = (minSize + optimalSize) / 2;
+      high = mid;
     }
-    
-    span.style.fontSize = optimalSize + 'px';
+
     iterations++;
-    
-    // Stop if we're close enough
-    if (Math.abs(maxSize - minSize) < 1) break;
   }
-  
-  // Restore visibility and animate to optimal size smoothly
-  span.style.visibility = 'visible';
-  span.style.fontSize = originalFontSize + 'px';
-  
-  // Animate with GSAP for smooth effect - no scale transform, just fontSize
+
+  bestFit = Math.max(bestFit, minFontSize);
+
+  if (apply) {
+    // Apply a small safety margin to avoid layout ripple on neighbors
+    const adjusted = bestFit * 0.9; // reduce shrink to avoid visible jump
+    span.style.fontSize = `${adjusted}px`;
+    // #region agent log
+    fetch('http://127.0.0.1:7243/ingest/9b8b9d03-a71c-482b-80a1-522ea625e906',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:'debug-session',runId:'post-fix2',hypothesisId:'H4',location:'textScaling.js:scaleTextToFit',message:'apply size',data:{reason:debugReason,bestFit,adjusted,appliedFont:adjusted,boxSize:{w:box.clientWidth,h:box.clientHeight},spanSize:{w:span.scrollWidth,h:span.scrollHeight}},timestamp:Date.now()})}).catch(()=>{});
+    // #endregion
+  } else {
+    // Restore original inline styles when we're only measuring
+    span.style.fontSize = previousFontSize;
+    span.style.lineHeight = previousLineHeight;
+  }
+
+  return bestFit;
+}
+export function scaleTextAfterGridAnimation(span, box, originalFontSize) {
+  if (!span || !box) return;
+
+  const currentSize = parseFloat(window.getComputedStyle(span).fontSize) || originalFontSize || 18;
+
+  // #region agent log
+  fetch('http://127.0.0.1:7243/ingest/9b8b9d03-a71c-482b-80a1-522ea625e906',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:'debug-session',runId:'post-fix2',hypothesisId:'H7',location:'textScaling.js:scaleTextAfterGridAnimation',message:'start grid scale',data:{currentSize,boxSize:{w:box.clientWidth,h:box.clientHeight}},timestamp:Date.now()})}).catch(()=>{});
+  // #endregion
+
+  // Find the largest size that fits the new box, but do not apply it yet
+  const targetSize = scaleTextToFit(span, box, {
+    minFontSize: Math.max(18, currentSize * 0.9),
+    padding: 16,
+    maxIterations: 60,
+    apply: false
+  });
+
+  const finalSize = targetSize ? targetSize * 0.95 : currentSize;
+
+  // Animate up to the fitted size, then lock it in precisely
   gsap.to(span, {
-    fontSize: optimalSize + 'px',
-    duration: 0.5,
+    fontSize: `${finalSize}px`,
+    duration: 0.45,
     ease: 'power2.out',
-    onUpdate: function() {
-      // Ensure text never exceeds optimal size during animation
-      const currentSize = parseFloat(span.style.fontSize);
-      if (currentSize > optimalSize) {
-        gsap.set(span, { fontSize: optimalSize + 'px' });
+    onComplete: () => {
+      // #region agent log
+      fetch('http://127.0.0.1:7243/ingest/9b8b9d03-a71c-482b-80a1-522ea625e906',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sessionId:'debug-session',runId:'post-fix2',hypothesisId:'H8',location:'textScaling.js:scaleTextAfterGridAnimation',message:'grid scale complete',data:{finalSize,boxSize:{w:box.clientWidth,h:box.clientHeight}},timestamp:Date.now()})}).catch(()=>{});
+      // #endregion
+      if (targetSize) {
+        scaleTextToFit(span, box, {
+          minFontSize: 18,
+          padding: 16,
+          maxIterations: 10
+        });
       }
     }
   });
 }
+
 
